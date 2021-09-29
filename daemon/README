@@ -1,7 +1,7 @@
 Daemon example program
 ======================
 
-1. Compile the souce code:
+1. Compile the source code:
 $ make build
 
 2. Execute the daemon:
