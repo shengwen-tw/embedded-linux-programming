@@ -1,0 +1,17 @@
+Basic kernel module
+===================
+
+1. Compile the kernel module:
+$ make
+
+2. print info of the kernel module:
+$ sudo modinfo basic.ko
+
+3. install the kernel module:
+$ sudo insmod basic.ko
+
+4. observe the kernel module list:
+$ sudo lsmod | grep basic
+
+5. remove the kernel module:
+$ sudo rmmod basic
