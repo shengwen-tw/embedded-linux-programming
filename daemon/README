@@ -1,0 +1,11 @@
+Daemon example program
+======================
+
+1. Compile the souce code:
+$ make build
+
+2. Execute the daemon:
+$ sudo ./daemon.elf
+
+3. Observe the daemon output:
+$ tail -f /tmp/daemon.log
