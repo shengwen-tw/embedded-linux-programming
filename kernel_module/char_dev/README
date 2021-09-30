@@ -1,0 +1,23 @@
+Character device driver example
+===============================
+
+1. Compile the driver:
+$ make
+
+2. Install the driver:
+$ sudo insmod char_dev.ko
+
+3. Print the device file:
+$ ls /dev/chardev
+
+4. Test read operation of the character device:
+$ sudo cat /dev/chardev
+
+5. Test write operation of the character device:
+$ echo "hi" | sudo tee -a /dev/chardev
+
+6. Verify the result of step 5:
+$ sudo dmesg
+
+7. Remove the driver from the kernel:
+$ sudo rmmod char_dev.ko
