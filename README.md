@@ -1,4 +1,4 @@
-# embedded linux programming
+# Embedded Linux Programming
 
 Some code collections for developing embedded linux programs.
 
