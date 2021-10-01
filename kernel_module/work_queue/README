@@ -1,0 +1,14 @@
+Work queue example
+==================
+
+1. Compile the work queue example module:
+$ make
+
+2. Install the work queue example module:
+$ sudo insmod work_queue.ko
+
+3. Observe the result:
+$ sudo dmesg
+
+4. Remove the work queue example module:
+$ sudo rmmod work_queue
