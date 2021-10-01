@@ -1,0 +1,14 @@
+Tasklet Example
+===============
+
+1. Compile the tasklet module:
+$ make
+
+2. Install the tasklet module:
+$ sudo insmod tasklet.ko
+
+3. Observe the result:
+$ sudo dmesg
+
+4. Remove the tasklet module:
+$ sudo rmmod tasklet
