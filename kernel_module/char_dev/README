@@ -20,4 +20,4 @@ $ echo "hi" | sudo tee -a /dev/chardev
 $ sudo dmesg
 
 7. Remove the driver from the kernel:
-$ sudo rmmod char_dev.ko
+$ sudo rmmod char_dev
