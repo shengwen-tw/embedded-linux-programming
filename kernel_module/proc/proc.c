@@ -10,17 +10,25 @@
 #endif
 
 #define procfs_name "hello_world"
+#define PROCFS_MAX_SIZE 1024
 
 static struct proc_dir_entry *proc_file;
 
+static char procfs_buffer[PROCFS_MAX_SIZE];
+static unsigned long procfs_buffer_size = 0;
+
 static ssize_t proc_file_read(struct file *file_ptr, char __user *buf,
-                             size_t buf_len, loff_t *offset)
+                              size_t buf_len, loff_t *offset)
 {
-	char *s = "Hello World!\n";
+	char s[14] = "Hello World!\n";
 	int len = sizeof(s);
 	ssize_t ret = len;
 
-	if(*offset > len || copy_to_user(buf, s, len)) {
+	if(*offset == len) {
+		return 0;
+	}
+
+	if(copy_to_user(buf, s, len)) {
 		pr_info("copy to user failed.\n");
 		ret = 0;
 	} else {
@@ -32,13 +40,34 @@ static ssize_t proc_file_read(struct file *file_ptr, char __user *buf,
 	return ret;
 }
 
+static ssize_t proc_file_write(struct file *file_ptr, const char __user *buf,
+                               size_t buf_len, loff_t *offset)
+{
+	procfs_buffer_size = buf_len;
+	if(procfs_buffer_size) {
+		procfs_buffer_size = PROCFS_MAX_SIZE;
+	}
+
+	if(copy_from_user(procfs_buffer, buf, procfs_buffer_size)) {
+		return -EFAULT;
+	}
+
+	procfs_buffer[procfs_buffer_size] = '\0';
+
+	pr_info("%s", procfs_buffer);
+
+	return procfs_buffer_size;
+}
+
 #ifdef HAVE_PROC_OPS
 static const struct proc_ops proc_file_fops = {
 	.proc_read = proc_file_read,
+	.proc_write = proc_file_write,
 };
 #else
 static const struct file_operations proc_file_fops = {
 	.read = proc_file_read,
+	.write = proc_file_write,
 };
 #endif
 

@@ -13,8 +13,11 @@ $ ls /proc/hello_world
 4. Print the content of the proc file:
 $ cat /proc/hello_world
 
-5. Check kernel print message:
+5. Write text to the proc file"
+$ echo "proc test write" | sudo tee -a /proc/hello_world
+
+6. Check kernel print message:
 $ sudo dmesg
 
-6. Remove the module from the kernel:
+7. Remove the module from the kernel:
 $ sudo rmmod proc
