@@ -1,0 +1,20 @@
+proc filesystem module example
+==============================
+
+1. Compile the module:
+$ make
+
+2. Install the module:
+$ sudo insmod proc.ko
+
+3. Print the proc file path:
+$ ls /proc/hello_world
+
+4. Print the content of the proc file:
+$ cat /proc/hello_world
+
+5. Check kernel print message:
+$ sudo dmesg
+
+6. Remove the module from the kernel:
+$ sudo rmmod proc
