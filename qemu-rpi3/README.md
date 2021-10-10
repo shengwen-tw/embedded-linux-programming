@@ -17,6 +17,9 @@ sudo make install
 ## 2. Download the Raspbian image
 
 ```
+#For convenient, we save our virtual machine files in this directory:
+cd embedded-linux-programming/qemu-rpi3/
+
 wget https://downloads.raspberrypi.org/raspbian/images/raspbian-2018-11-15/2018-11-13-raspbian-stretch.zip
 unzip 2018-11-13-raspbian-stretch.zip
 ```
@@ -26,6 +29,9 @@ unzip 2018-11-13-raspbian-stretch.zip
 1. Download the Linux kernel soruce code:
 
 ```
+#For convenient, we save our virtual machine files in this directory:
+cd embedded-linux-programming/qemu-rpi3/
+
 git clone git://github.com/raspberrypi/linux.git --branch raspberrypi-kernel_1.20180619-1 --single-branch --depth 1
 ```
 
