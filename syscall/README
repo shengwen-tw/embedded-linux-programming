@@ -1,0 +1,48 @@
+[On your host machine:]
+
+1. Copy new syscall to the kernel souce
+$ cp my_syscall/ ../qemu-rpi3/linux/
+
+2. Open 'linux/Makefile' and find 'core-y' variable:
+$ vim ../qemu-rpi3/linux/Makefile
+
+3. Append 'my_syscall/' to the end of the variable:
+'''
+ifeq ($(KBUILD_EXTMOD),)
+core-y += kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ my_syscall/
+'''
+
+4. Open the syscall table file:
+$ vim ../qemu-rpi3/linux/arch/arm/tools/syscall.tbl
+
+5. Append our new syscall function to the end of the table
+'''
+397  common  statx        sys_statx
+398  common  hello_world  syscall_hello_world
+'''
+
+6. Open the syscall header file:
+$ vim ../qemu-rpi3/linux/include/linux/syscalls.h
+
+7. Append our new syscall function's prototype:
+'''
+asmlinkage long sys_statx(int dfd, const char __user *path, unsigned flags,
+                          unsigned mask, struct statx __user *buffer);
+asmlinkage long syscall_hello_world(void);
+'''
+
+8. Compile the Linux kernel again:
+$ cd ../qemu-rpi3/linux/ 
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
+$ cp ./arch/arm/boot/zImage ../kernel7.img
+$ cp ./arch/arm/boot/dts/versatile-pb.dtb ../versatile-pb.dtb
+$ cp ./vmlinux ../vmlinux
+
+[On your client machine (QEMU):]
+
+1. Compile the test program:
+$ cd embedded-linux-programming/syscall/user
+$ make
+
+2. Run the test program:
+$ ./test_my_syscall
