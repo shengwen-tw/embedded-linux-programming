@@ -35,17 +35,20 @@ sudo docker attach ubuntu-xenial
 3. Install **sudo** command for docker image
 
 ```
+#Execute the command on the client
 apt-get update && apt-get -y install sudo
 ```
 
 4. Show all containers:
 
 ```
+#Execute the command on the host
 sudo docker ps
 ```
 
 5. [Optional] To remove the container:
 ```
+#Execute the command on the host
 sudo docker container rm ubuntu-xenial
 ```
 
