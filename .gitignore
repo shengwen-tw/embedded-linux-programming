@@ -6,3 +6,9 @@
 *.order
 *.symvers
 *.mod
+*.img
+*.zip
+*.img
+*.dtb
+linux/
+vmlinux
