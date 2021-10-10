@@ -2,7 +2,7 @@
 
 Some code collections for developing embedded linux programs.
 
-## Virtual Raspberry Pi environment with Docker
+## Docker virtual environment
 
 **It is recommended to test kernel modules in the virtual environment to prevent damage on the system.**
 
@@ -32,6 +32,11 @@ sudo docker run -it -p 5900:5900 --name raspbian tommychap/raspberrypi:latest
 sudo docker start raspbian
 sudo docker attach raspbian
 ```
+3. Install **sudo** command for docker image
+
+```
+apt-get update && apt-get -y install sudo
+```
 
 4. Show all containers:
 
@@ -39,7 +44,7 @@ sudo docker attach raspbian
 sudo docker ps
 ```
 
-3. [Optional] To remove the container:
+5. [Optional] To remove the container:
 ```
 sudo docker container rm raspbian
 ```
