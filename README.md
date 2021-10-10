@@ -23,14 +23,14 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 1. Create new container:
 
 ```
-sudo docker run -it -p 5900:5900 --name raspbian tommychap/raspberrypi:latest
+sudo docker run --privileged -it -p 5900:5900 --name ubuntu-xenial tommychap/raspberrypi:latest
 ```
 
 2. Run the container created previously:
 
 ```
-sudo docker start raspbian
-sudo docker attach raspbian
+sudo docker start ubuntu-xenial
+sudo docker attach ubuntu-xenial
 ```
 3. Install **sudo** command for docker image
 
@@ -46,7 +46,7 @@ sudo docker ps
 
 5. [Optional] To remove the container:
 ```
-sudo docker container rm raspbian
+sudo docker container rm ubuntu-xenial
 ```
 
 ## References
