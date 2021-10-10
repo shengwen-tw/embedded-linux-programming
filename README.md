@@ -4,7 +4,7 @@ Some code collections for developing embedded linux programs.
 
 ## Virtual Raspberry Pi environment with Docker
 
-**For developing kernel module, it is recommended to test in the virtual environment to prevent the damage of the system.**
+**It is recommended to test kernel modules in the virtual environment to prevent damage on the system.**
 
 0. Prerequisites
 
