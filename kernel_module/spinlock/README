@@ -1,0 +1,14 @@
+Spinlock module example
+=======================
+
+1. compile the spinlock module
+$ make
+
+2. Install the spinlock module
+$ sudo insmod spinlock.ko
+
+3. Observe the kernel message
+$ sudo dmesg
+
+4. Remove the spinlock module
+$ sudo rmmod spinlock
