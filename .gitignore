@@ -10,5 +10,6 @@
 *.zip
 *.img
 *.dtb
+*.sw*
 linux/
 vmlinux
