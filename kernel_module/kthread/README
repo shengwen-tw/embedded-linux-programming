@@ -1,0 +1,14 @@
+kthread module example
+======================
+
+1. compile the kthread module
+$ make
+
+2. Install the kthread module
+$ sudo insmod kthread.ko
+
+3. Observe the kernel message
+$ sudo dmesg
+
+4. Remove the kthread module
+$ sudo rmmod kthread
