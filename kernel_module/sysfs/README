@@ -1,0 +1,18 @@
+sysfs module example
+====================
+
+1. Compile the sysfs module:
+$ make
+
+2. Install the sysfs module:
+$ sudo insmod my_sysfs.ko
+
+3. Write a value to the sysfs variable:
+$ echo "32" | sudo tee -a /sys/kernel/my_sysfs/my_variable
+
+4. Print the value of the sysfs variable:
+$ sudo cat /sys/kernel/my_sysfs/my_variable
+
+5. Remove the sysfs module:
+$ sudo rmmod my_sysfs.ko
+
