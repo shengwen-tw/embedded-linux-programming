@@ -1,17 +1,23 @@
-# Patch PREEMPT_RT for Linux with Raspberry Pi 4
+# Patch Linux with PREEMPT_RT for Raspberry Pi 4
+
+0. Install prerequisite software
+
+```
+sudo apt-get install gcc-9-aarch64-linux-gnu
+```
 
 1. Download the RPi Linux kernel and PREEMPT_RT patch file:
 
 ```
-mkdir workspace
-cd workspace
+mkdir -p ~/rpi-ws
+cd ~/rpi-ws
 git clone -b rpi-5.4.y https://github.com/raspberrypi/linux.git
 wget https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/5.4/older/patch-5.4.54-rt32.patch.gz
 ```
 
 2. Patch the RPi Linux kernel:
 ```
-cd linux
+cd ~/rpi-ws/linux
 gzip -cd ../patch-5.4.54-rt32.patch.gz | patch -p1 --verbose
 ```
 
@@ -37,17 +43,17 @@ make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 7. Export the compiled result:
 
 ```
-mkdir -p ../rt-linux/boot
-export INSTALL_MOD_PATH=../rt-linux/
-export INSTALL_DTBS_PATH=../rt-linux/
+mkdir -p ~/rpi-ws/out/boot
+export INSTALL_MOD_PATH=~/rpi-ws/out/
+export INSTALL_DTBS_PATH=~/rpi-ws/out/
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install dtbs_install
-cp arch/arm64/boot/Image ../rt-linux/boot/kernel8.img
+cp arch/arm64/boot/Image ~/rpi-ws/out/boot/kernel8.img
 ```
 
 8. Download the official Raspbian image:
 
 ```
-cd workspace
+cd ~/rpi-ws/
 wget https://downloads.raspberrypi.org/raspbian/images/raspbian-2020-02-14/2020-02-13-raspbian-buster.zip
 ```
 
@@ -60,33 +66,32 @@ sudo dd if=./2020-02-13-raspbian-buster.img  of=/dev/sdX bs=4M
 10. Mount the SD card on the host computer:
 
 ```
-sudo mkdir -p /media/boot
-sudo mkdir -p /media/rootfs
-sudo mount /dev/sdX1 /media/boot
-sudo mount /dev/sdX2 /media/rootfs
+mkdir -p ~/rpi-ws/sd/boot
+mkdir -p ~/rpi-ws/sd/rootfs
+sudo mount /dev/sdX1 ~/rpi-ws/sd/boot
+sudo mount /dev/sdX2 ~/rpi-ws/sd/rootfs
 ```
 
 11. Copy the compiled results to the SD card:
 
 ```
-sudo cp rt-linux/boot/kernel8.img /media/boot/
-sudo cp -r rt-linux/boot/overlays/ /media/boot/
-sudo cp -r lib/modules/5.4.83-rt32-v8+/ /media/rootfs/lib/modules/
+cp ~/rpi-ws/out/boot/kernel8.img ~/rpi-ws/sd/boot/
+cp -r ~/rpi-ws/out/overlays/ ~/rpi-ws/sd/boot/
+cp -r ~/rpi-ws/out/broadcom/ ~/rpi-ws/sd/boot/
+cp -r ~/rpi-ws/out/lib/modules/5.4.83-rt32-v8+/ ~/rpi-ws/sd/rootfs/lib/modules/
 ```
 
 12. Assign kernel image in **config.txt**:
 
 ```
-sudo echo "kernel=kernel8.img" >> /media/boot/config.txt
+sudo echo "kernel=kernel8.img" >> ~/rpi-ws/sd/boot/config.txt
 ```
 
 13. Unmount the SD card:
 
 ```
-sudo umount /media/boot
-sudo umount /media/rootfs
-sudo rm -rf /media/boot/
-sudo rm -rf /media/rootfs/
+sudo umount ~/rpi-ws/sd/boot
+sudo umount ~/rpi-ws/sd/rootfs
 ```
 
 14. Finished.
