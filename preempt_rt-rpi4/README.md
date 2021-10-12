@@ -1,4 +1,4 @@
-# Patch PREEMPT_RT for Linux with Raspberry Pi 4
+# Patch Linux with PREEMPT_RT for Raspberry Pi 4
 
 1. Download the RPi Linux kernel and PREEMPT_RT patch file:
 
