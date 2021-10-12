@@ -3,6 +3,17 @@
 #include <pthread.h>
 #include <time.h>
 
+#define MAX_SAFE_STACK (8 * 1024)
+
+/* pre-fault the stack, so that a future stack fault will not undermine
+ * deterministic behavior
+ */
+void prefault_stack(void)
+{
+	unsigned char dummy[MAX_SAFE_STACK];
+	memset(dummy, 0, MAX_SAFE_STACK);
+}
+
 /* accurate delay function for real-time application */
 void delay_ms(int delay_ms)
 {
@@ -21,10 +32,12 @@ void delay_ms(int delay_ms)
 
 int main(void)
 {
+	/* stack pre-fault */
+	prefault_stack();
+
 	/* change process priority */
 	struct sched_param sp;
 	sp.sched_priority = 30;
-
 	if(pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp)) {
 		printf("Failed to set priority of the proceess.\n");
 	}
