@@ -33,15 +33,15 @@ void delay_ms(int delay_ms)
 
 int main(void)
 {
-	/* stack pre-fault */
-	prefault_stack();
-
 	/* change process priority */
 	struct sched_param sp;
 	sp.sched_priority = 30;
 	if(pthread_setschedparam(pthread_self(), SCHED_FIFO, &sp)) {
 		printf("Failed to set priority of the proceess.\n");
 	}
+
+	/* stack pre-fault */
+	prefault_stack();
 
 	/* lock the memory page of the real-time application to prevent memory swapping */
 	if(mlockall(MCL_FUTURE | MCL_CURRENT)) {
