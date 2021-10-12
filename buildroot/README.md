@@ -7,7 +7,7 @@ git clone git://git.busybox.net/buildroot
 cd buildroot
 ```
 
-2. List all support boards
+2. List all supported boards
 
 ```
 make list-defconfigs
