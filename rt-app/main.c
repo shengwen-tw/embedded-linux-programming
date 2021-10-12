@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <time.h>
+#include <string.h>
 
 #define MAX_SAFE_STACK (8 * 1024)
 
