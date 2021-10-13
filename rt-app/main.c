@@ -40,13 +40,13 @@ int main(void)
 		printf("Failed to set priority of the proceess.\n");
 	}
 
-	/* stack pre-fault */
-	prefault_stack();
-
 	/* lock the memory page of the real-time application to prevent memory swapping */
 	if(mlockall(MCL_FUTURE | MCL_CURRENT)) {
 		printf("Failed to lock the memory, try to execure the program with root privilege.\n");
 	}
+
+	/* stack pre-fault */
+	prefault_stack();
 
 	/* your real-time program's main loop */
 	while(1) {
