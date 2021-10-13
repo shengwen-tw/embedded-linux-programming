@@ -1,31 +1,40 @@
 Platform driver and device tree example
 =======================================
 
+* Prerequisite: qemu-rpi3/README.md
+
 1. Copy the driver source code to the kernel
-$ cp -r platform_driver/ qemu-rpi3/linux/driver/
+$ cd embedded-linux-programming
+$ cp -r kernel_modules/platform_driver/ qemu-rpi3/linux/drivers/
 
-2. Append the following text to the end of the "qemu-rpi3/linux/driver/Makefile":
+2. Append the following text to the end of the "linux/driver/Makefile":
 '''
-obj-y += my_platform_driver/
-'''
-
-3. Append the following text to the end of the "qemu-rpi3/linux/driver/Kconfig":
-'''
-source "drivers/my_platform_driver/Kconfig"
+obj-y += platform_driver/
 '''
 
-4. Start menuconfig and enable Device driver -> MY_PLATFORM_DRIVER:
+3. Append the following text to the end of the "linux/driver/Kconfig":
+'''
+source "drivers/platform_driver/Kconfig"
+'''
+
+4. Replace the device tree soruce code
+$ cd embedded-linux-programming/kernel_module/platform_driver/
+$ cp versatile-pb.dts ../../qemu-rpi3/linux/arch/arm/boot/dts/versatile-pb.dts
+
+5. Start menuconfig and enable Device drivers -> My platform driver:
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 
-5. Compile the kernel again:
+6. Compile the kernel again:
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- clean
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
 
-6. Replace the kernel binaries:
-$ cd /qemu-rpi3/linux/ 
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
+7. Replace the kernel binaries:
 $ cp ./arch/arm/boot/zImage ../kernel7.img
 $ cp ./arch/arm/boot/dts/versatile-pb.dtb ../versatile-pb.dtb
 $ cp ./vmlinux ../vmlinux
 
-7. Bootup the system in QEMU:
+8. Bootup the system in QEMU:
 * Check qemu-rpi3/README.md
+
+9. List current device tree:
+$ dtc -I fs /sys/firmware/devicetree/base | grep "my_platform_driver"
