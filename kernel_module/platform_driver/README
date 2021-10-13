@@ -9,7 +9,7 @@ $ cp -r kernel_modules/platform_driver/ qemu-rpi3/linux/drivers/
 
 2. Append the following text to the end of the "linux/driver/Makefile":
 '''
-obj-y += platform_driver/
+obj-$(CONFIG_MY_PLATFORM_DRIVER) += platform_driver/
 '''
 
 3. Append the following text to the end of the "linux/driver/Kconfig":
@@ -21,20 +21,46 @@ source "drivers/platform_driver/Kconfig"
 $ cd embedded-linux-programming/kernel_module/platform_driver/
 $ cp versatile-pb.dts ../../qemu-rpi3/linux/arch/arm/boot/dts/versatile-pb.dts
 
-5. Start menuconfig and enable Device drivers -> My platform driver:
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+5. Start menuconfig and enable Device drivers -> <M> My platform driver:
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-menuconfig
 
 6. Compile the kernel again:
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- clean
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 
 7. Replace the kernel binaries:
 $ cp ./arch/arm/boot/zImage ../kernel7.img
 $ cp ./arch/arm/boot/dts/versatile-pb.dtb ../versatile-pb.dtb
 $ cp ./vmlinux ../vmlinux
 
-8. Bootup the system in QEMU:
+8. Export the kernel modules
+$ mkdir -p ../out
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules_install 
+
+9. Mount the raspbian image as disk:
+$ cd ..
+$ sudo losetup --show -fP 2018-11-13-raspbian-stretch.img
+$ mkdir rootfs
+$ sudo mount /dev/loopXp2 rootfs #Check loop number with "sudo fdisk -l"
+
+10. Copy the modules to the raspbian rootfs
+$sudo cp -r out/lib/modules/4.14.50+/ rootfs/lib/modules/
+
+11. Unmount the rasbian rootfs
+$ sudo umount rootfs
+
+12. Boot up the system in QEMU:
 * Check qemu-rpi3/README.md
 
-9. List current device tree:
+13. List current device tree:
 $ dtc -I fs /sys/firmware/devicetree/base | grep "my_platform_driver"
+
+14. Observe the kernel message:
+$ sudo dmesg
+
+You should see:
+'''
+[   17.063813] my_platform_driver: loaded.
+[   17.063993] my_platform_driver amba:gpio@ffdf0000: probe.
+[   17.064028] my_platform_driver amba:gpio@ffdf0000: property=10
+'''

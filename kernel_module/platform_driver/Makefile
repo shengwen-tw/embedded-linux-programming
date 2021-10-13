@@ -1,1 +1,1 @@
-obj-$(MY_PLATFORM_DRIVER) += platform_driver.o
+obj-$(CONFIG_MY_PLATFORM_DRIVER) += platform_driver.o

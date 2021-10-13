@@ -1,5 +1,5 @@
 config MY_PLATFORM_DRIVER
-        bool "My platform driver"
+        tristate "My platform driver"
 	depends on ARM
         help
           Select this configuration to enable the platform driver example.
