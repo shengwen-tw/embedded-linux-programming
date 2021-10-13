@@ -1,0 +1,14 @@
+Hash module example
+===================
+
+1. compile the hash module
+$ make
+
+2. Install the hash module
+$ sudo insmod hash.ko
+
+3. Observe the kernel message
+$ sudo dmesg
+
+4. Remove the hash module
+$ sudo rmmod hash
