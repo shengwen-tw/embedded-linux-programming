@@ -1,0 +1,31 @@
+Platform driver and device tree example
+=======================================
+
+1. Copy the driver source code to the kernel
+$ cp -r platform_driver/ qemu-rpi3/linux/driver/
+
+2. Append the following text to the end of the "qemu-rpi3/linux/driver/Makefile":
+'''
+obj-y += my_platform_driver/
+'''
+
+3. Append the following text to the end of the "qemu-rpi3/linux/driver/Kconfig":
+'''
+source "drivers/my_platform_driver/Kconfig"
+'''
+
+4. Start menuconfig and enable Device driver -> MY_PLATFORM_DRIVER:
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
+
+5. Compile the kernel again:
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
+
+6. Replace the kernel binaries:
+$ cd /qemu-rpi3/linux/ 
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bzImage dtbs
+$ cp ./arch/arm/boot/zImage ../kernel7.img
+$ cp ./arch/arm/boot/dts/versatile-pb.dtb ../versatile-pb.dtb
+$ cp ./vmlinux ../vmlinux
+
+7. Bootup the system in QEMU:
+* Check qemu-rpi3/README.md
