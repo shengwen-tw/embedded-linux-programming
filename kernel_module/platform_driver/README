@@ -26,7 +26,7 @@ $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-menuconfig
 
 6. Compile the kernel again:
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- clean
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
+$ make -j4 ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 
 7. Replace the kernel binaries:
 $ cp ./arch/arm/boot/zImage ../kernel7.img
