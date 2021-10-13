@@ -13,3 +13,6 @@ Some code collections for developing embedded linux programs
 4. [Realtime tasks in Linux](https://www.isy.liu.se/edu/kurs/TSEA81/lecture_linux_realtime.html)
 
 5. [64bit RT Kernel Compilation for Raspberry Pi 4B](https://www.instructables.com/64bit-RT-Kernel-Compilation-for-Raspberry-Pi-4B-/)
+
+6. [Introduction to Real-time Systems
+](https://design.ros2.org/articles/realtime_background.html?fbclid=IwAR0zRXocBVjwVug6NP7Jt5uXOZa0ALc1cELW1vcKJDqDB2oFSfugB8-coYE)
